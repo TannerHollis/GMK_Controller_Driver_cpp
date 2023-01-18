@@ -49,8 +49,8 @@ void display_controller_data(Controller_Data_TypeDef* c)
     printf(" D-Pad, Down:\t%u\n", c->buttons.down);
 
     printf("Joysticks\n");
-    printf(" Left,  X: % f\tY:% f\n", (float)c->joysticks.left.x / (float)UINT16_MAX, (float)c->joysticks.left.y / (float)UINT16_MAX);
-    printf(" Right, X: % f\tY:% f\n", (float)c->joysticks.right.x / (float)UINT16_MAX, (float)c->joysticks.right.y / (float)UINT16_MAX);
+    printf(" Left,  X: % f\tY:% f\n", (float)c->joysticks.left.x / (float)INT16_MAX, (float)c->joysticks.left.y / (float)INT16_MAX);
+    printf(" Right, X: % f\tY:% f\n", (float)c->joysticks.right.x / (float)INT16_MAX, (float)c->joysticks.right.y / (float)INT16_MAX);
     
     printf("Triggers\n");
     printf(" Left:  % 3u\n", c->triggers.left);
