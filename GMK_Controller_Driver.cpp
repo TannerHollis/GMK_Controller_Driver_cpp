@@ -49,8 +49,8 @@ void display_controller_data(Controller_Data_TypeDef* c)
     printf(" D-Pad, Down:\t%u\n", c->buttons.down);
 
     printf("Joysticks\n");
-    printf(" Left,  X: % 6i\tY:% 6i\n", c->joysticks.left.x, c->joysticks.left.y);
-    printf(" Right, X: % 6i\tY:% 6i\n", c->joysticks.right.x, c->joysticks.right.y);
+    printf(" Left,  X: % f\tY:% f\n", (float)c->joysticks.left.x / (float)UINT16_MAX, (float)c->joysticks.left.y / (float)UINT16_MAX);
+    printf(" Right, X: % f\tY:% f\n", (float)c->joysticks.right.x / (float)UINT16_MAX, (float)c->joysticks.right.y / (float)UINT16_MAX);
     
     printf("Triggers\n");
     printf(" Left:  % 3u\n", c->triggers.left);
@@ -141,7 +141,7 @@ libusb_error initialize_device()
     if (gmk_handle == NULL)
     {
         printf("Unable to open GMK Controller\n VID=%x\tPID=%x\n", vid, pid);
-        return ret;
+        return LIBUSB_ERROR_NOT_FOUND;
     }
 
     int config;
@@ -198,6 +198,7 @@ int main()
         if (usb_error != LIBUSB_SUCCESS)
         {
             printf(" Error: %s (%i)\n", libusb_strerror(usb_error), usb_error);
+            return -1;
         }
 
         VIGEM_ERROR vigem_error = inititalize_vigem();
@@ -205,6 +206,7 @@ int main()
         if (!VIGEM_SUCCESS(vigem_error))
         {
             printf("Error: %i", vigem_error);
+            return -1;
         }
         else
         {
@@ -214,6 +216,7 @@ int main()
         if (usb_error != LIBUSB_SUCCESS)
         {
             printf(" Error: %s (%i)\n", libusb_strerror(usb_error), usb_error);
+            return -1;
         }
 
         if (gmk_handle != NULL)
